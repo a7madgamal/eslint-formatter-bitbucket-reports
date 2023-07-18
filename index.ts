@@ -88,7 +88,7 @@ function generateAnnotations(
           external_id,
           line,
           path: relativePath,
-          summary: `${message} (${ruleId})`,
+          summary: `${message.substring(400)} (${ruleId})`,
           annotation_type: "BUG",
           severity: severity === 1 ? SEVERITIES.MEDIUM : SEVERITIES.HIGH,
         };
