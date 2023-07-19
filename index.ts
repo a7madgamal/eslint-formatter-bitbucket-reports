@@ -9,6 +9,7 @@ const BITBUCKET_COMMIT = getEnv("BITBUCKET_COMMIT"); //"919db18";
 const BITBUCKET_API_AUTH = getEnv("BITBUCKET_API_AUTH");
 
 const MAX_ANNOTATIONS_PER_REQUEST = 100;
+const MAX_TOTAL_ANNOTATIONS = 1000;
 
 const httpClient = got.extend({
   prefixUrl: `https://api.bitbucket.org/2.0`,
@@ -177,10 +178,13 @@ async function processResults(results: CLIEngine.LintResult[]) {
   try {
     if (annotations.length > 0) {
       console.log("✍🏼 Adding new annotations...");
-      await createAnnotations(reportId, annotations);
+      await createAnnotations(
+        reportId,
+        annotations.slice(0, MAX_TOTAL_ANNOTATIONS)
+      );
       console.log("✅ Annotations added!");
     } else {
-      console.log("⚠️ no annotations found!", annotations);
+      console.log("⚠️ no annotations found!");
     }
   } catch (error: any) {
     console.log("❌ Annotations adding failed!");
