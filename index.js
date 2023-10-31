@@ -56,7 +56,7 @@ function generateAnnotations(results, reportId) {
                     external_id,
                     line,
                     path: relativePath,
-                    summary: `${message.substring(400)} (${ruleId})`,
+                    summary: `${message.substring(350)} (${ruleId})`,
                     annotation_type: "BUG",
                     severity: severity === 1 ? SEVERITIES.MEDIUM : SEVERITIES.HIGH,
                 };
