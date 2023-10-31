@@ -52,11 +52,15 @@ function generateAnnotations(results, reportId) {
             ...result.messages.map((messageObject, i) => {
                 const { line, message, severity, ruleId } = messageObject;
                 const external_id = `${reportId}-${relativePath}-${line}-${ruleId}-${i}`;
+                // summary max length is 450
+                const messageSize = 440 - (ruleId ? ruleId.length : 1);
+                const summary = `${message.substring(messageSize)} (${ruleId})`.substring(440);
+                console.log(summary, summary.length);
                 const result = {
                     external_id,
                     line,
                     path: relativePath,
-                    summary: `${message.substring(350)} (${ruleId})`,
+                    summary,
                     annotation_type: "BUG",
                     severity: severity === 1 ? SEVERITIES.MEDIUM : SEVERITIES.HIGH,
                 };
