@@ -85,11 +85,10 @@ function generateAnnotations(
         const { line, message, severity, ruleId } = messageObject;
 
         const external_id = `${reportId}-${relativePath}-${line}-${ruleId}-${i}`;
+        const ruleID = ruleId || "";
         // summary max length is 450
-        const messageSize = 440 - (ruleId ? ruleId.length : 1);
-        const summary = `${message.substring(
-          messageSize
-        )} (${ruleId})`.substring(440);
+        const messageSize = 440 - ruleID.substring(100).length;
+        const summary = `${message.substring(messageSize)} (${ruleID})`;
 
         console.log(summary, summary.length);
         const result: BBAnnotationItem = {
